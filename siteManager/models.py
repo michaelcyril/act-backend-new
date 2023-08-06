@@ -6,6 +6,7 @@ class Event(models.Model):
     description = models.TextField()
     date = models.DateField(null=True)
     time = models.TimeField(null=True)
+    image = models.ImageField(upload_to="uploads/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -15,35 +16,30 @@ class Event(models.Model):
         db_table = 'event'
 
 
-class EventFile(models.Model):
-    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
-    file = models.BinaryField()
-
-    def __str__(self):
-        return f'{self.event_id.title}'
-
-    class Meta:
-        db_table = 'event_file'
-
-
-class New(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField()
+class Application(models.Model):
+    first_name = models.CharField(max_length=200)
+    last_name = models.CharField(max_length=200)
+    phone = models.CharField(max_length=12)
+    email = models.EmailField()
+    document = models.FileField(upload_to="applications/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.title}'
+        return f'{self.phone}'
 
     class Meta:
-        db_table = 'new'
+        db_table = 'application'
 
 
-class NewFile(models.Model):
-    new_id = models.ForeignKey(New, on_delete=models.CASCADE)
-    file = models.BinaryField()
+class Contact(models.Model):
+    message = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.new_id.title}'
+        return f'{self.name}'
 
     class Meta:
-        db_table = 'new_file'
+        db_table = 'contact'
+

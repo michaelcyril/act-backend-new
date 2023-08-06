@@ -18,12 +18,17 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-        print("hey iam reached")
-        first_name = self.validated_data['first_name']
-        last_name = self.validated_data['last_name']
-        email = self.validated_data['email']
-        password = self.validated_data['password']
-        username = self.validated_data['username']
-        user = User.objects.create_user(username=username, password=password, last_name=last_name,
-                                        first_name=first_name, email=email)
+        user = User.objects.create_user(**validated_data)
         return user
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    model = User
+
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
+
