@@ -1,4 +1,5 @@
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -46,15 +47,16 @@ class LoginView(APIView):
         username = request.data.get('username')
         password = request.data.get('password')
         print('Data: ', username, password)
-        print(User.objects.get(username=username).password)
         user = authenticate(username=username, password=password)
         print(user)
         if user is not None:
             login(request, user)
+            token, created = Token.objects.get_or_create(user=user)
+            print(token.key)
             user_id = User.objects.get(username=username)
             user_info = UserSerializer(instance=user_id, many=False).data
             response = {
-                'token': get_user_token(user_id),
+                'token': token.key,
                 'user': user_info
             }
 
