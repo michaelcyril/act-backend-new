@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializer import UserSerializer, ChangePasswordSerializer
 from django.contrib.auth import authenticate, login, update_session_auth_hash
-from .token import get_user_token
+# from .token import get_user_token
 from .models import User
 from rest_framework.generics import UpdateAPIView
 

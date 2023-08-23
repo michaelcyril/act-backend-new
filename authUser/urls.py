@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import RegisterUser, LoginView, ChangePasswordView, UpdateUserView
-from rest_framework_simplejwt import views as jwt_views
+# from rest_framework_simplejwt import views as jwt_views
 app_name = 'authUser'
 
 urlpatterns = [
